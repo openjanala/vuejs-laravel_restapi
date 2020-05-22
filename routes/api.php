@@ -12,3 +12,4 @@
 
 
 Route::apiResource('/class','Api\ClassController');
+Route::apiResource('/subject','Api\SubjectController');
