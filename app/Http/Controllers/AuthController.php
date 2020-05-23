@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-
+use DB;
 
 class AuthController extends Controller
 {
@@ -96,5 +96,23 @@ class AuthController extends Controller
     }
     public function payload(){
         return auth()->payload();
+    }
+    
+    public function register(){
+        
+        $validatedData = $request->validate([
+            'name'=> ['required','string','max:25'],
+            'name'=> ['required','string','email','max:25','unique:users'],
+            'password'=> ['required','string','min:8','confirmed'],
+        ]);
+
+        $data = arrya();
+        $data['name'] =$request->name;
+        $data['email'] =$request->email;
+        $data['password'] =$request->password;
+        DB::table('users')->insert($request);
+
+        return $this->login($request);
+
     }
 }
